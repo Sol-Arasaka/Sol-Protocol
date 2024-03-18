@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 import styles from '../styles/Home.module.css'
+import NavBar from '../components/Navbar'
 
 const Home: NextPage = () => {
   return (
@@ -14,7 +15,9 @@ const Home: NextPage = () => {
         <link href={"/favicon.ico"} rel={"icon"} />
       </Head>
 
+      <NavBar/>
       <main className={styles.main}>
+
         <ConnectButton />
 
         <h1 className={styles.title}>
