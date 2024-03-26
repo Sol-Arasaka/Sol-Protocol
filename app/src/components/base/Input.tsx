@@ -1,4 +1,3 @@
-export function Input(){
-    return(<div>{"Input"}</div>)
-    }
-    
+export function Input() {
+  return <div>{'Input'}</div>
+}
