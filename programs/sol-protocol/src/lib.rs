@@ -1,11 +1,13 @@
 use anchor_lang::prelude::*;
 
-declare_id!("7M5iD5J7hFHuk3UeP1ykrJK2VTK26Va638omgWbtUzMi");
+// Your program Id will be added here when you enter "build" command
+declare_id!("3HuN3uYw1h33gUyJwoy1vRaNLEijd782ceLQPgSCk9b4");
 
 #[error_code]
 pub enum ErrorCode {
     #[msg("Already asserted")]
     AlreadyAsserted,
+    NotYetAsserted,
     // Add other variants if needed
 }
 
@@ -31,7 +33,7 @@ pub mod sol_protocol {
         Ok(())
     }
 
-    pub fn assert(ctx: Context<Assert>, id: u64, answer: bool) -> Result<()> {
+    pub fn assert(ctx: Context<Assert>, id: u64, answer: bool, _proposal_id: u64) -> Result<()> {
         let proposal_account: &mut Account<'_, ProposalAccount> =
             &mut ctx.accounts.proposal_account;
         if proposal_account.assert_at != 0 {
@@ -45,7 +47,27 @@ pub mod sol_protocol {
         //TODO: add real money transfer
         assertion_account.assert_amount = proposal_account.reward_amount * 100;
         assertion_account.assert_at = Clock::get()?.unix_timestamp;
+        proposal_account.assert_at = assertion_account.assert_at;
+        Ok(())
+    }
 
+    pub fn challenge_assert(ctx: Context<ChallengeAssert>, id: u64, _proposal_id: u64, _assert_id: u64) -> Result<()> {
+        let proposal_account: &mut Account<'_, ProposalAccount> =
+            &mut ctx.accounts.proposal_account;
+        if proposal_account.assert_at == 0 {
+            return Err(ErrorCode::NotYetAsserted.into());
+        }
+        let assertion_account = &mut ctx.accounts.assertion_account;
+        let challenge_assertion_account = &mut ctx.accounts.challenge_assertion_account;
+        challenge_assertion_account.id = id;
+        challenge_assertion_account.owner = *ctx.accounts.authority.key;
+        challenge_assertion_account.proposal_key = proposal_account.key();
+        challenge_assertion_account.pre_assert_key = assertion_account.key();
+        challenge_assertion_account.answer = !assertion_account.answer;
+        //TODO: add real money transfer
+        challenge_assertion_account.assert_amount = assertion_account.assert_amount * 2;
+        challenge_assertion_account.assert_at = Clock::get()?.unix_timestamp;
+        proposal_account.assert_at = challenge_assertion_account.assert_at;
         Ok(())
     }
 }
@@ -69,14 +91,14 @@ pub struct Proposal<'info> {
 }
 
 #[derive(Accounts)]
-#[instruction(id : u64, answer: bool)]
+#[instruction(id : u64, answer: bool, proposal_id: u64)]
 pub struct Assert<'info> {
     #[account(mut)]
     pub authority: Signer<'info>,
 
     #[account(
         mut,
-        seeds = [b"proposal", authority.key().as_ref(), id.to_le_bytes().as_ref()], 
+        seeds = [b"proposal", authority.key().as_ref(), proposal_id.to_le_bytes().as_ref()], 
         bump
     )]
     pub proposal_account: Account<'info, ProposalAccount>,
@@ -84,11 +106,42 @@ pub struct Assert<'info> {
     #[account(
         init,
         payer = authority,
-        space = 8 + 8 + 32+ (4 + 12)+ 32 + 1 + 8 + 8 + 1,
+        space = 8 + 32 + 32 + 32 + 32 + 4 + 8 + 8 + 1,
         seeds = [b"assert", authority.key().as_ref(), id.to_le_bytes().as_ref(), proposal_account.id.to_le_bytes().as_ref()], 
         bump
     )]
     pub assertion_account: Account<'info, AssertionAccount>,
+    pub system_program: Program<'info, System>,
+}
+
+#[derive(Accounts)]
+#[instruction(id : u64, proposal_id: u64, assert_id: u64)]
+pub struct ChallengeAssert<'info> {
+    #[account(mut)]
+    pub authority: Signer<'info>,
+
+    #[account(
+        mut,
+        seeds = [b"proposal", authority.key().as_ref(), proposal_id.to_le_bytes().as_ref()], 
+        bump
+    )]
+    pub proposal_account: Account<'info, ProposalAccount>,
+
+    #[account(
+        mut,
+        seeds = [b"assert", authority.key().as_ref(), assert_id.to_le_bytes().as_ref(), proposal_account.id.to_le_bytes().as_ref()], 
+        bump
+    )]
+    pub assertion_account: Account<'info, AssertionAccount>,
+
+    #[account(
+        init,
+        payer = authority,
+        space = 8 + 32 + 32 + 32 + 32 + 4 + 8 + 8 + 1,
+        seeds = [b"assert", authority.key().as_ref(), id.to_le_bytes().as_ref(), proposal_account.id.to_le_bytes().as_ref()], 
+        bump
+    )]
+    pub challenge_assertion_account: Account<'info, AssertionAccount>,
 
     pub system_program: Program<'info, System>,
 }
@@ -104,10 +157,11 @@ pub struct ProposalAccount {
 }
 
 #[account]
-#[derive(Default)]
+#[derive(Default, Debug)]
 pub struct AssertionAccount {
     pub id: u64,
     pub proposal_key: Pubkey,
+    pub pre_assert_key: Pubkey,
     pub owner: Pubkey,
     pub answer: bool,
     pub assert_amount: u64,
