@@ -4,12 +4,14 @@ module.exports = {
   plugins: ['tailwindcss'],
   settings: {
     tailwindcss: {
-      callees: ['cn', 'cva']
+      callees: ['cn', 'cva'],
+      config: 'tailwind.config.js'
     }
   },
   rules: {
     'react/jsx-curly-brace-presence': ['error', { props: 'always', children: 'always', propElementValues: 'always' }],
     'tailwindcss/no-custom-classname': 'off',
     'tailwindcss/classnames-order': 'error'
-  }
+  },
+
 }
