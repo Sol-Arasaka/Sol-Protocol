@@ -19,9 +19,9 @@ module.exports = {
         inter: 'var(--inter)'
       },
       colors: {
-        background: '#FFFFFF',
+        background: '#000000',
         primary: {
-          DEFAULT: '#B4A169',
+          DEFAULT: '#0b6e4f',
           light: '#E2D19E',
           dark: '#7F7243',
           hover: '#908154'
