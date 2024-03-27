@@ -46,12 +46,19 @@ export function WalletButton() {
 
   useEffect(() => {
     try {
+      if (!wallet) {
+        setShowWalletDialog(true); // If wallet is not selected, show the wallet selection dialog
+        return; // Return to prevent further execution
+      }
+  
       connect().then(() => {
         setShowWalletDialog(false);
       });
-    } catch (e) { }
+    } catch (e) {
+      e instanceof Error && console.log(e);
+    }
   }, [wallet, connect]);
-
+  
   return (
     <>
       {connected === true && wallet !== null && publicKey !== null ? (
