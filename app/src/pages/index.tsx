@@ -50,7 +50,7 @@ const Home: NextPage = () => {
         </section>
 
         {/* Recent past votes */}
-        <section className='mt-16 bg-slate-300'>
+        <section className={'mt-16 bg-slate-300'}>
           <div>{'Recent past votes:'}</div>
           <div className={'space-y-4'}>
             <div className={'flex h-8 w-full bg-gray-500'}>
