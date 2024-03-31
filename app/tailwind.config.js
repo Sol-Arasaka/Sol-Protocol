@@ -25,6 +25,15 @@ module.exports = {
           light: '#E2D19E',
           dark: '#7F7243',
           hover: '#908154'
+        },
+        second: {
+          DEFAULT: '#9370db',
+          light: '#a56eff',
+          dark: '#693d89',
+          hover: '#693dff'
+        },
+        hint: {
+          DEFAULT: '#d1c4e9'
         }
       },
       keyframes: {

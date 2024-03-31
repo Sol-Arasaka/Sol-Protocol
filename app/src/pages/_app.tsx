@@ -7,7 +7,7 @@ import Head from 'next/head'
 import Layout from '@/components/Layout'
 import { Web3Provider } from '@/components/web3-provider'
 import { Suspense } from 'react'
-import Home from '@/pages'
+import Loading from './loading'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link href={'/images/Logo_0.png'} rel={'icon'} />
       </Head>
       <Web3Provider>
-      <Suspense fallback={<Home />}>
+      <Suspense fallback={<Loading />}>
         <Layout>
           <Component {...pageProps} />
         </Layout>
