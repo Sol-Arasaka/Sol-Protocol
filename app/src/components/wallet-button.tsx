@@ -18,6 +18,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { Adapter } from "@solana/wallet-adapter-base";
+import { cn } from "@/utils/classnames";
 
 export function WalletButton() {
   const { connected, publicKey, wallet, wallets, connect, select, disconnect } =
@@ -66,7 +67,7 @@ export function WalletButton() {
           <DropdownMenuTrigger asChild>
             <Button variant={"default"}>
               {
-                <div className={"flex flex-row items-center justify-center space-x-2"}>
+                <div className={"flex flex-row items-center justify-center space-x-2 "}>
                   <Image
                     src={wallet.adapter.icon}
                     alt={""}
@@ -83,10 +84,10 @@ export function WalletButton() {
             </Button>
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent >
+          <DropdownMenuContent className={"text-white"}>
             <DropdownMenuLabel>{"Settings"}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={showDialog}>
+            <DropdownMenuItem onClick={showDialog }>
               {"Change Wallet"}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={disconnectWallet}>
@@ -98,7 +99,7 @@ export function WalletButton() {
         <Button
           variant={"outline"}
           onClick={onClickWalletButton}
-          className={`${!connected && "animate-bounce"}`}
+          className={cn("text-white",`${!connected && "text-primary"}`)}
         >
           {"Connect Wallet"}
         </Button>
