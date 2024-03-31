@@ -23,9 +23,9 @@ module.exports = {
         background: '#ffffff',
         primary: {
           DEFAULT: '#0b6e4f',
-          light: '#E2D19E',
-          dark: '#7F7243',
-          hover: '#908154'
+          light: '#00A600',
+          dark: '#32592E',
+          hover: '#019858'
         },
         second: {
           DEFAULT: '#9370db',

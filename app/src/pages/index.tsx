@@ -1,5 +1,3 @@
-import { Icon } from '@/components/base'
-
 export default function Home() {
   return (
     <>

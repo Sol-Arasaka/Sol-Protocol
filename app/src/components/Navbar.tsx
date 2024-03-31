@@ -1,32 +1,61 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
 
-import { Button, Icon } from '@/components/base'
+import { Button } from '@/components/base'
 
 import { WalletButton } from './wallet-button'
+import { cn } from '@/utils/classnames'
 
+interface Navbarlink {
+  label: string
+  link:string
+}
 export default function NavBar() {
   const router = useRouter()
+  console.log( router.pathname)
+
+  const NavLinks: Navbarlink[] = [
+    {
+      label: 'Topics',
+      link: '/topics'
+    },
+    {
+      label: 'Create',
+      link:'/topics/create'
+    }
+  ]
+
   return (
     <header className={'z-5 relative left-0 top-0 w-full'}>
       <div className={'flex h-[60px] items-center justify-between bg-navbarBg px-4 shadow-lg shadow-second-dark'}>
         <Button className={'flex gap-0'} variant={null} onClick={() => router.push('/')}>
           <Image src={'/images/logo_1.png'} alt={'Logo'} width={32} height={32} className={'h-12 w-auto'} />
-          <div className={"flex flex-col justify-center"}>
+          <div className={'flex flex-col justify-center'}>
             <p className={'text-left text-lg italic leading-none text-second'}>
               {'Reality'}
-              <span className={"text-hint"}>{"S"}</span>
+              <span className={'text-hint'}>{'S'}</span>
               {'ync'}
-              </p>
-            <p className={"ml-2 text-[10px] leading-4"}>{"Solana Optimistic Oracle"}</p>
+            </p>
+            <p className={'ml-2 text-[10px] leading-4'}>{'Solana Optimistic Oracle'}</p>
           </div>
         </Button>
         <div className={'flex items-center gap-4'}>
+          <div className={'flex'}>
+            {NavLinks.map((link, key) => {
+              return (
+                <Button
+                  className={cn('flex h-auto gap-0 rounded-none border-r-2 px-4 text-sm font-bold text-white hover:text-primary-hover',  router.pathname === link.link && 'text-primary-light')}
+                  key={key}
+                  variant={null}
+                  onClick={()=>router.push(link.link)}
+                >
+                  {link.label}
+                </Button>
+              )
+            })}
+          </div>
+
           <WalletButton />
-          <Button size={'icon'} className={'rounded-full bg-transparent text-white hover:bg-primary'}>
-            <Icon name={'Menu'} className={'w-5'} />
-          </Button>
         </div>
       </div>
     </header>
