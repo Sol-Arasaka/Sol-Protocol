@@ -9,8 +9,8 @@ import { WalletButton } from './wallet-button'
 export default function NavBar() {
   const router = useRouter()
   return (
-    <header className={'left-0 top-0 z-40  w-full  shadow-lg'}>
-      <div className={'flex h-[60px] items-center justify-between bg-background px-4'}>
+    <header className={'z-5 relative left-0 top-0 w-full'}>
+      <div className={'flex h-[60px] items-center justify-between bg-navbarBg px-4 shadow-lg shadow-second-dark'}>
         <Button className={'flex gap-0'} variant={null} onClick={() => router.push('/')}>
           <Image src={'/images/logo_1.png'} alt={'Logo'} width={32} height={32} className={'h-12 w-auto'} />
           <div className={"flex flex-col justify-center"}>

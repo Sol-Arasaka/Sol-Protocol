@@ -19,7 +19,8 @@ module.exports = {
         inter: 'var(--inter)'
       },
       colors: {
-        background: '#000000',
+        navbarBg: '#000000',
+        background: '#ffffff',
         primary: {
           DEFAULT: '#0b6e4f',
           light: '#E2D19E',
