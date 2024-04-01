@@ -5,14 +5,14 @@ seeds = false
 skip-lint = false
 
 [programs.localnet]
-sol_protocol = "7M5iD5J7hFHuk3UeP1ykrJK2VTK26Va638omgWbtUzMi"
+sol_protocol = "5X9U1KpXt2poDjLE8xQVJg2a1eYGRq82HejW68XXX5ia"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
 cluster = "Localnet"
-wallet = "/Users/mitrofan.tw/.config/solana/id.json"
+wallet = "~/.config/solana/id.json"
 
 [scripts]
 test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
