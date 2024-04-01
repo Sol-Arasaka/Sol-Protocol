@@ -1,27 +1,31 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
+import { cn } from '@/utils/classnames'
 import { Button } from '@/components/base'
 
 import { WalletButton } from './wallet-button'
-import { cn } from '@/utils/classnames'
 
 interface Navbarlink {
   label: string
-  link:string
+  link: string
 }
 export default function NavBar() {
   const router = useRouter()
-  console.log( router.pathname)
+  console.log(router.pathname)
 
   const NavLinks: Navbarlink[] = [
+    {
+      label: 'Home',
+      link: '/'
+    },
     {
       label: 'Topics',
       link: '/topics'
     },
     {
       label: 'Create',
-      link:'/topics/create'
+      link: '/topics/create'
     }
   ]
 
@@ -44,10 +48,13 @@ export default function NavBar() {
             {NavLinks.map((link, key) => {
               return (
                 <Button
-                  className={cn('flex h-auto gap-0 rounded-none border-r-2 px-4 text-sm font-bold text-white hover:text-primary-hover',  router.pathname === link.link && 'text-primary-light')}
+                  className={cn(
+                    'flex h-auto gap-0 rounded-none border-r-2 px-4 text-sm font-bold text-white hover:text-primary-hover',
+                    router.pathname === link.link && 'text-primary-light'
+                  )}
                   key={key}
                   variant={null}
-                  onClick={()=>router.push(link.link)}
+                  onClick={() => router.push(link.link)}
                 >
                   {link.label}
                 </Button>
