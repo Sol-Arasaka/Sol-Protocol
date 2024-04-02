@@ -141,8 +141,8 @@ export default function AssetScreen() {
         </div>
       </form>
 
-      <div className={'w-full rounded bg-slate-800 px-8 py-4'}>
-        <div className={'text-start font-bold'}>{'Topic Propose'}</div>
+      <div className={'w-full gap-4 rounded bg-slate-800 px-8 py-4'}>
+        <div className={'text-start font-bold'}>{'Topic Input'}</div>
         {isLoading ? (
           <TableSkeleton columns={columns} length={15} hasDropdown={true} />
         ) : (
