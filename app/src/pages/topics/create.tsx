@@ -69,51 +69,53 @@ export default function AssetScreen() {
     ] satisfies Column<InputData>[]
   }, [])
 
-  const list: InputData[] = [
-    {
-      number: 1,
-      name: 'Request',
-      type: 'bytes',
-      data: 'RequestData' //TODO
-    },
-    {
-      number: 2,
-      name: 'requester',
-      type: 'address',
-      data: 'requesterData' //TODO
-    },
-    {
-      number: 3,
-      name: 'identifier',
-      type: 'bytes32',
-      data: 'identifier' //TODO
-    },
-    {
-      number: 4,
-      name: 'request timestamp',
-      type: 'unit256',
-      data: 'Time' //TODO
-    },
-    {
-      number: 5,
-      name: 'ancilaryData',
-      type: 'string',
-      data: 'ancilaryData - string (Question)' //TODO
-    },
-    {
-      number: 6,
-      name: 'ancilaryData',
-      type: 'bytes',
-      data: 'ancilaryData - bytes' //TODO
-    },
-    ,
-    {
-      number: 7,
-      name: 'RealitySyncIp',
-      type: 'string',
-      data: 'OurIPLink' //TODO
-    }
-  ].filter((data) => data !== undefined) as InputData[]
+  const list: InputData[] = useMemo(() => {
+    return [
+      {
+        number: 1,
+        name: 'Request',
+        type: 'bytes',
+        data: 'RequestData' //TODO
+      },
+      {
+        number: 2,
+        name: 'requester',
+        type: 'address',
+        data: 'requesterData' //TODO
+      },
+      {
+        number: 3,
+        name: 'identifier',
+        type: 'bytes32',
+        data: 'identifier' //TODO
+      },
+      {
+        number: 4,
+        name: 'request timestamp',
+        type: 'unit256',
+        data: 'Time' //TODO
+      },
+      {
+        number: 5,
+        name: 'ancilaryData',
+        type: 'string',
+        data: 'ancilaryData - string (Question)' //TODO
+      },
+      {
+        number: 6,
+        name: 'ancilaryData',
+        type: 'bytes',
+        data: 'ancilaryData - bytes' //TODO
+      },
+      ,
+      {
+        number: 7,
+        name: 'RealitySyncIp',
+        type: 'string',
+        data: 'OurIPLink' //TODO
+      }
+    ].filter((data) => data !== undefined) as InputData[]
+  }, [])
 
   return (
     <div className={'mx-auto mt-8 w-2/3 space-y-4'}>
@@ -139,8 +141,8 @@ export default function AssetScreen() {
         </div>
       </form>
 
-      <div className={'w-full rounded bg-slate-800 px-8 py-4'}>
-        <div className={'text-start font-bold'}>{'Topic Propose'}</div>
+      <div className={'w-full gap-4 rounded bg-slate-800 px-8 py-4'}>
+        <div className={'text-start font-bold'}>{'Topic Input'}</div>
         {isLoading ? (
           <TableSkeleton columns={columns} length={15} hasDropdown={true} />
         ) : (
