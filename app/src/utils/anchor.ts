@@ -1,8 +1,8 @@
 import { PublicKey } from "@solana/web3.js";
 
 export const programID = new PublicKey(
-  "7MtYccqQ745U3ohVr6YVibhpvZCMHUer11BR69zYjrZw"
-);
+  "3Y1UEAKRVuRr4qX8KN4UxhbhaACVCyskbDushd2Ud2FY"
+); // this is for test
 
 export const getVaultPDA = (publicKey: PublicKey) => {
   const [vaultPDA] = PublicKey.findProgramAddressSync(
@@ -21,41 +21,86 @@ export const getCounterPDA = (publicKey: PublicKey) => {
   return counterPDA;
 };
 
-export type SolanaVault = {
+export type SolProtocol = {
   version: "0.1.0";
-  name: "hello_anchor";
+  name: "sol_protocol";
   instructions: [
     {
-      name: "deposit";
+      name: "propose";
       accounts: [
-        { name: "userVaultAccount"; isMut: true; isSigner: false },
-        { name: "userInteractionsCounter"; isMut: true; isSigner: false },
-        { name: "signer"; isMut: true; isSigner: true },
+        { name: "authority"; isMut: true; isSigner: true },
+        { name: "proposalAccount"; isMut: true; isSigner: false },
         { name: "systemProgram"; isMut: false; isSigner: false }
       ];
-      args: [{ name: "amount"; type: "u64" }];
+      args: [
+        { name: "id"; type: "u64" },
+        { name: "proposalName"; type: "string" },
+        { name: "rewardAmount"; type: "u64" }
+      ];
     },
     {
-      name: "withdraw";
+      name: "assert";
       accounts: [
-        { name: "userVaultAccount"; isMut: true; isSigner: false },
-        { name: "userInteractionsCounter"; isMut: true; isSigner: false },
-        { name: "signer"; isMut: true; isSigner: true },
+        { name: "authority"; isMut: true; isSigner: true },
+        { name: "proposalAccount"; isMut: true; isSigner: false },
+        { name: "assertionAccount"; isMut: true; isSigner: false },
         { name: "systemProgram"; isMut: false; isSigner: false }
       ];
-      args: [{ name: "amount"; type: "u64" }];
+      args: [
+        { name: "id"; type: "u64" },
+        { name: "answer"; type: "bool" },
+        { name: "proposalId"; type: "u64" }
+      ];
+    },
+    {
+      name: "challengeAssert";
+      accounts: [
+        { name: "authority"; isMut: true; isSigner: true },
+        { name: "proposalAccount"; isMut: true; isSigner: false },
+        { name: "assertionAccount"; isMut: true; isSigner: false },
+        { name: "challengeAssertionAccount"; isMut: true; isSigner: false },
+        { name: "systemProgram"; isMut: false; isSigner: false }
+      ];
+      args: [
+        { name: "id"; type: "u64" },
+        { name: "proposalId"; type: "u64" },
+        { name: "assertId"; type: "u64" }
+      ];
     }
   ];
   accounts: [
     {
-      name: "userInteractions";
+      name: "ProposalAccount";
       type: {
         kind: "struct";
         fields: [
-          { name: "totalDeposits"; type: "u64" },
-          { name: "totalWithdrawals"; type: "u64" }
+          { name: "id"; type: "u64" },
+          { name: "owner"; type: "publicKey" },
+          { name: "proposalName"; type: "string" },
+          { name: "rewardAmount"; type: "u64" },
+          { name: "assertAt"; type: "i64" }
+        ];
+      };
+    },
+    {
+      name: "AssertionAccount";
+      type: {
+        kind: "struct";
+        fields: [
+          { name: "id"; type: "u64" },
+          { name: "proposalKey"; type: "publicKey" },
+          { name: "preAssertKey"; type: "publicKey" },
+          { name: "owner"; type: "publicKey" },
+          { name: "answer"; type: "bool" },
+          { name: "assertAmount"; type: "u64" },
+          { name: "assertAt"; type: "i64" }
         ];
       };
     }
   ];
+  errors: [
+    { code: 6000; name: "AlreadyAsserted"; msg: "Already asserted" },
+    { code: 6001; name: "NotYetAsserted" }
+  ];
+  metadata: { address: "3Y1UEAKRVuRr4qX8KN4UxhbhaACVCyskbDushd2Ud2FY" };
 };
