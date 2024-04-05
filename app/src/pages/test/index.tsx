@@ -35,7 +35,7 @@ const TestPage = () => {
     try {
       const proposalAccount = getProposePDA({ publicKey, proposalId });
       const assertionAccount = getAssertPDA({ publicKey, proposalId, assertId });
-      const challengeAccount = getChallengeAssertPDA({ publicKey, proposalId, challengeId });
+      const challengeAssertionAccount = getChallengeAssertPDA({ publicKey, proposalId, challengeId });
 
       // The sig variable is the transaction signature.
       // It is used to track the transaction on-chain.
@@ -58,6 +58,17 @@ const TestPage = () => {
             authority: publicKey,
             proposalAccount,
             assertionAccount,
+          })
+          .rpc();
+      }
+
+      if (type === "challengeAssert") {
+        signature = await program.methods.challengeAssert(new BN(challengeId), new BN(proposalId), new BN(assertId))
+          .accounts({
+            authority: publicKey,
+            proposalAccount,
+            assertionAccount,
+            challengeAssertionAccount,
           })
           .rpc();
       }
