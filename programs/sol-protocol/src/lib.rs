@@ -81,7 +81,7 @@ pub struct Proposal<'info> {
     #[account(
         init,
         payer = authority,
-        space = 8 + 8 + 32+ (4 + 12)+ 8 + 1,
+        space = 8 + 8 + 32+ (4 + 12)+ 8 + 1 + 50,
         seeds = [b"proposal", authority.key().as_ref(), id.to_le_bytes().as_ref()], 
         bump
     )]
