@@ -5,7 +5,7 @@ seeds = false
 skip-lint = false
 
 [programs.localnet]
-sol_protocol = "5X9U1KpXt2poDjLE8xQVJg2a1eYGRq82HejW68XXX5ia"
+sol_protocol = "3Y1UEAKRVuRr4qX8KN4UxhbhaACVCyskbDushd2Ud2FY"
 
 [registry]
 url = "https://api.apr.dev"
