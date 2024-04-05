@@ -33,7 +33,7 @@ export default function NavBar() {
     <header className={'z-5 relative left-0 top-0 w-full'}>
       <div className={'flex h-[60px] items-center justify-between bg-navbarBg px-4 shadow-lg shadow-second-dark'}>
         <Button className={'flex gap-0'} variant={null} onClick={() => router.push('/')}>
-          <Image src={'/images/logo_1.png'} alt={'Logo'} width={32} height={32} className={'h-12 w-auto'} />
+          <Image src={'/images/logo_1.png'} alt={'Logo'} width={120} height={120} className={'h-12 w-auto'} />
           <div className={'flex flex-col justify-center'}>
             <p className={'text-left text-lg italic leading-none text-second'}>
               {'Reality'}
