@@ -14,10 +14,11 @@ const TestPage = () => {
   const provider = useSolanaProvider();
   const [isLoading, setIsLoading] = useState(false);
   const [proposalId, setProposalId] = useState<number>(0);
-  const [assertId, setAssertId] = useState<number>(0);
-  const [challengeId, setChallengeId] = useState<number>(0);
   const [proposalName, setProposalName] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
+  const [assertId, setAssertId] = useState<number>(0);
+  const [assertValue, setAssertValue] = useState<boolean>(false);
+  const [challengeId, setChallengeId] = useState<number>(0);
 
 
   const onMoveFunds = async (type: "propose" | "assert" | "challengeAssert") => {
@@ -33,7 +34,7 @@ const TestPage = () => {
 
     try {
       const proposalAccount = getProposePDA({ publicKey, proposalId });
-      const assertAccount = getAssertPDA({ publicKey, proposalId, assertId });
+      const assertionAccount = getAssertPDA({ publicKey, proposalId, assertId });
       const challengeAccount = getChallengeAssertPDA({ publicKey, proposalId, challengeId });
 
       // The sig variable is the transaction signature.
@@ -51,7 +52,16 @@ const TestPage = () => {
       }
       console.log("Transaction Signature: ", signature);
 
-      // After the transaction is sent we update the balances of the user and the vault.
+      if (type === "assert") {
+        signature = await program.methods.assert(new BN(assertId), assertValue, new BN(proposalId))
+          .accounts({
+            authority: publicKey,
+            proposalAccount,
+            assertionAccount,
+          })
+          .rpc();
+      }
+
     } catch (err) {
       console.log("Transaction Error: ", err);
     }
