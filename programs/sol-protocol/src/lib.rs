@@ -1,7 +1,10 @@
 use anchor_lang::prelude::*;
 
 // Your program Id will be added here when you enter "build" command
-declare_id!("3HuN3uYw1h33gUyJwoy1vRaNLEijd782ceLQPgSCk9b4");
+declare_id!("3Y1UEAKRVuRr4qX8KN4UxhbhaACVCyskbDushd2Ud2FY");
+
+// owen's local program id:3Y1UEAKRVuRr4qX8KN4UxhbhaACVCyskbDushd2Ud2FY
+// aron's dev net program id: 3HuN3uYw1h33gUyJwoy1vRaNLEijd782ceLQPgSCk9b4
 
 #[error_code]
 pub enum ErrorCode {
