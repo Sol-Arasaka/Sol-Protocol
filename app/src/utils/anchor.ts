@@ -1,24 +1,31 @@
 import { PublicKey } from "@solana/web3.js";
 
 export const programID = new PublicKey(
-  "3Y1UEAKRVuRr4qX8KN4UxhbhaACVCyskbDushd2Ud2FY"
+  "3HuN3uYw1h33gUyJwoy1vRaNLEijd782ceLQPgSCk9b4"
 ); // this is for test
 
-export const getVaultPDA = (publicKey: PublicKey) => {
+export const getProposePDA = (publicKey: PublicKey) => {
   const [vaultPDA] = PublicKey.findProgramAddressSync(
-    [Buffer.from("vault"), publicKey.toBuffer()],
+    [Buffer.from("propose"), publicKey.toBuffer()],
     programID
   );
   return vaultPDA;
 };
 
-export const getCounterPDA = (publicKey: PublicKey) => {
-  const [counterPDA] = PublicKey.findProgramAddressSync(
-    [Buffer.from("counter"), publicKey.toBuffer()],
+export const getAssertPDA = (publicKey: PublicKey) => {
+  const [vaultPDA] = PublicKey.findProgramAddressSync(
+    [Buffer.from("assert"), publicKey.toBuffer()],
     programID
   );
+  return vaultPDA;
+};
 
-  return counterPDA;
+export const getChallengeAssertPDA = (publicKey: PublicKey) => {
+  const [vaultPDA] = PublicKey.findProgramAddressSync(
+    [Buffer.from("challengeAssert"), publicKey.toBuffer()],
+    programID
+  );
+  return vaultPDA;
 };
 
 export type SolProtocol = {
