@@ -1,7 +1,7 @@
 import { BN } from '@coral-xyz/anchor'
 import { PublicKey } from '@solana/web3.js'
 
-export const programID = new PublicKey('3HuN3uYw1h33gUyJwoy1vRaNLEijd782ceLQPgSCk9b4') // this is for test
+export const programID = new PublicKey('8AqNKTQHBnfJoNguvYrVUmD2GVfBHB31i11s42a3JGhT') // this is for test
 
 interface ProposePDA {
   publicKey: PublicKey
@@ -9,11 +9,16 @@ interface ProposePDA {
 }
 
 export const getProposePDA = ({ publicKey, proposalId }: ProposePDA) => {
-  const [vaultPDA] = PublicKey.findProgramAddressSync(
-    [Buffer.from('propose'), publicKey.toBuffer(), new BN(proposalId).toArrayLike(Buffer, 'le', 8)],
+  console.log('publicKey', publicKey.toBase58())
+  console.log('proposalId', proposalId)
+  console.log('programID', programID.toBase58())
+
+  const [proposePDA] = PublicKey.findProgramAddressSync(
+    [Buffer.from('proposal'), publicKey.toBuffer(), new BN(proposalId).toArrayLike(Buffer, 'le', 8)],
     programID
   )
-  return vaultPDA
+  console.log('proposalPDA', proposePDA.toBase58())
+  return proposePDA
 }
 
 interface AssertPDA {
@@ -23,7 +28,10 @@ interface AssertPDA {
 }
 
 export const getAssertPDA = ({ publicKey, proposalId, assertId }: AssertPDA) => {
-  const [vaultPDA] = PublicKey.findProgramAddressSync(
+  console.log('publicKey', publicKey.toBase58())
+  console.log('proposalId', proposalId)
+  console.log('assertId', assertId)
+  const [assertPDA] = PublicKey.findProgramAddressSync(
     [
       Buffer.from('assert'),
       publicKey.toBuffer(),
@@ -32,7 +40,8 @@ export const getAssertPDA = ({ publicKey, proposalId, assertId }: AssertPDA) => 
     ],
     programID
   )
-  return vaultPDA
+  console.log('assertPDA', assertPDA.toBase58())
+  return assertPDA
 }
 
 interface ChallengeAssertPDA {
@@ -42,7 +51,11 @@ interface ChallengeAssertPDA {
 }
 
 export const getChallengeAssertPDA = ({ publicKey, proposalId, challengeId }: ChallengeAssertPDA) => {
-  const [vaultPDA] = PublicKey.findProgramAddressSync(
+  console.log('publicKey', publicKey.toBase58())
+  console.log('proposalId', proposalId)
+  console.log('challengeId', challengeId)
+
+  const [challengeAssertPDA] = PublicKey.findProgramAddressSync(
     [
       Buffer.from('challengeAssert'),
       publicKey.toBuffer(),
@@ -51,7 +64,8 @@ export const getChallengeAssertPDA = ({ publicKey, proposalId, challengeId }: Ch
     ],
     programID
   )
-  return vaultPDA
+  console.log('challengeAssertPDA', challengeAssertPDA.toBase58())
+  return challengeAssertPDA
 }
 
 export type SolProtocol = {
