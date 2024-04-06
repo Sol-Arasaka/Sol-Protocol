@@ -8,7 +8,9 @@ export default function Home() {
       </div>
 
       <div className={'mt-5 text-2xl font-bold text-second-light'}>{'RealitySync'}</div>
-      <div className={'mt-2'}>{'Well-planned infrastructure is the bedrock of progress and prosperity.'}</div>
+      <div className={"font-bold text-second"}>{"Secure, low-cost, real-time speculative projects targeting future event outcomes"}</div>
+      <div className={'mt-2 text-gray-600'}>{'Well-planned infrastructure is the bedrock of progress and prosperity.'}</div>
+      
     </div>
   )
 }
