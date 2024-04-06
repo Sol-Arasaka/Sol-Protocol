@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '@/components/base'
+import { Button, Input } from '@/components/base'
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { getProposePDA, getAssertPDA, getChallengeAssertPDA, SolProtocol, programID } from '@/utils/anchor'
 import { useSolanaProvider } from '@/hooks/solanaProvider';
@@ -79,16 +79,35 @@ const TestPage = () => {
     setIsLoading(false);
   };
   return (
-    <>
-      <div className={"mt-6 flex flex-col gap-4"}>
-        <Button
-          onClick={() => onMoveFunds("propose")}
-        >
+    <div className={"flex h-screen items-center justify-center"}>
+      <div className={"ali mt-6 flex w-80 flex-col gap-4"}>
+        <Input
+          type={"string"}
+          placeholder={"Proposal ID"}
+          className={"text-black  placeholder:text-black"} // Add the "text-black" class to make the text black
+          value={proposalId}
+          onChange={(e) => setProposalId(Number(e.target.value))}
+        />
+        <Input
+          type={"string"}
+          placeholder={"Proposal Name"}
+          className={"text-black"} // Add the "text-black" class to make the text black
+          value={proposalName}
+          onChange={(e) => setProposalName(e.target.value)}
+        />
+        <Input
+          type={"string"}
+          placeholder={"Amount"}
+          className={"text-black "} // Add the "text-black" class to make the text black
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+        />
+        <Button onClick={() => onMoveFunds("propose")}>
           {"propose"}
         </Button>
       </div>
-    </>
-  )
+    </div>
+  );
 }
 
 export default TestPage;
