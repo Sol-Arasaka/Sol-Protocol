@@ -4,11 +4,15 @@ export default function info() {
   return (
     <div className={'mx-auto mb-10 mt-8 w-2/3 space-y-4'}>
       <div className={'space-y-4 rounded bg-slate-800 px-8 py-4'}>
+        <div className={"flex justify-between"}>
+
         <div className={'text-start font-bold'}>{'I. Propose'}</div>
+        <div className={"text-left text-gray-500"}>{"RealitySyncId: fhio24oi"}</div>
+        </div>
         <div className={'text-2xl font-bold text-second'}>{'2024/02/25 Will SOL rise to $200?'}</div>
         <div className={'flex justify-between'}>
-          <div className={'text-right text-gray-500'}>{'Created: 2024-04-04,21:01'}</div>
-          <div className={'text-right text-gray-400'}>{'The event ends at: 2024-04-08,21:01'}</div>
+          <div className={'text-right text-xs text-gray-500'}>{'Created: 2024-04-04,21:01'}</div>
+          <div className={'text-left text-xs text-gray-400'}>{'The event ends at: 2024-04-08,21:01'}</div>
         </div>
       </div>
       <div className={'space-y-4 rounded bg-slate-800 px-8 py-4'}>
@@ -16,11 +20,11 @@ export default function info() {
 
         <div className={'mx-auto max-w-lg space-y-4'}>
           <div className={'mb-2 flex overflow-hidden rounded-full'}>
-            <div className={'flex h-8 w-4/5 items-center justify-center bg-primary-light'}>
-              <div className={'flex h-full items-center text-center font-bold text-white'}>{'80%'}</div>
+            <div className={'flex h-8 w-[95%] items-center justify-center bg-primary-light'}>
+              <div className={'flex h-full items-center text-center font-bold text-white'}>{'95%'}</div>
             </div>
-            <div className={'flex h-8 w-1/5 justify-center bg-second-light'}>
-              <div className={'flex h-full items-center text-center font-bold text-white'}>{'20%'}</div>
+            <div className={'flex h-8 w-[5%] justify-center bg-second-light'}>
+              <div className={'flex h-full items-center text-center text-xs font-bold text-white'}>{'5%'}</div>
             </div>
           </div>
           <div className={'flex space-x-4'}>
@@ -41,7 +45,7 @@ export default function info() {
               {'No'}
             </Button>
           </div>
-          <div className={'font-bold text-red-400'}>{'Attention: Voting has ended!'}</div>
+          <div className={'font-bold text-red-400'}>{'Correct vote: YES'}</div>
 
           <div className={'flex'}>
             <Button
@@ -75,7 +79,7 @@ export default function info() {
               </div>
               <div className={'mb-2 flex'}>
                 <div>
-                  <div className={'size-8 rounded-full bg-second'}></div>
+                  <div className={'size-8 rounded-full bg-hint'}></div>
                   <p className={'mt-2 text-center text-xs text-gray-400'}>{'user2'}</p>
                 </div>
                 <div className={'ml-2 h-1/2 rounded-lg bg-gray-600 p-3'}>
