@@ -108,9 +108,9 @@ export default function AssetScreen() {
         <div className={'my-2 flex justify-between pr-12 text-left text-lg font-bold'}>
           <p className={'text-xl'}>{'II. Recent past votes:'}</p>
           <div className={'flex w-2/5 justify-between px-4 pl-12 text-primary-hover'}>
-            <div className={'w-30'}>{'you vote'}</div>
-            <div>{'topic result'}</div>
-            <div>{'link'}</div>
+            <div className={'w-30'}>{'You vote'}</div>
+            <div>{'Topic result'}</div>
+            <div>{'Info'}</div>
           </div>
         </div>
 
