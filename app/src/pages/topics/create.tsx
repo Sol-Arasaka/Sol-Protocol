@@ -1,8 +1,11 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Button, FormInput } from '@/components/base'
 import { Column, Table, TableSkeleton } from '@/components/base/Table'
+import { useConnection, useWallet } from '@solana/wallet-adapter-react'
+import { getProposePDA, getAssertPDA, getChallengeAssertPDA, SolProtocol, programID } from '@/utils/anchor'
+import { BN } from '@coral-xyz/anchor'
 
 type TopicInput = {
   topicName: string
@@ -29,6 +32,8 @@ export default function AssetScreen() {
   } = useForm<TopicInput>({
     defaultValues
   })
+  const { connection } = useConnection();
+  const { publicKey, connected, sendTransaction } = useWallet();
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -116,6 +121,34 @@ export default function AssetScreen() {
       }
     ].filter((data) => data !== undefined) as InputData[]
   }, [])
+  const test = () => {
+    if (!publicKey || !connected) return;
+    // connection.getAccountInfo(publicKey).then((data) => {
+    //   console.log(data)
+    // })
+    //getParsedProgramAccounts
+    connection.getProgramAccounts
+      (programID, {
+        // "encoding": "base64",
+        // "commitment": "confirmed",
+        "filters": [
+          {
+            "memcmp": {
+              "offset": 0,
+              "bytes": "UZCy4MAg7xB"
+            }
+          }
+        ]
+      }
+      ).then((data) => {
+        console.log(data)
+        data.map((item) => {
+          // const bufferData = Buffer.from(item.account.data);
+          console.log(item.account.data);
+        })
+      })
+  }
+
 
   return (
     <div className={'mx-auto mt-8 w-2/3 space-y-4'}>
@@ -136,6 +169,15 @@ export default function AssetScreen() {
               disabled={isSubmitting}
             >
               <span className={''}>{'Create Topic'}</span>
+            </Button>
+            <Button
+              className={'relative border hover:bg-slate-600'}
+              variant={null}
+              type={'submit'}
+              disabled={isSubmitting}
+              onClick={test}
+            >
+              <span className={''}>{'test'}</span>
             </Button>
           </div>
         </div>
