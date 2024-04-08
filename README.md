@@ -1,1 +1,3 @@
 ## SOL - Protocol 
+
+RealitySync, an Optimistic Oracle on Solana, links real-world data to the blockchain through an interactive game between proposers and disputers, secured by economic incentives. Users can assert truths, engage in a challenge period, and, if undisputed, the oracle finalizes based on smart contracts. Applicable in finance, insurance, and prediction markets, RealitySync aims to leverage Solana's high performance for secure, low-cost, and real-time feedback to create diverse and efficient virtual-real interaction experiences.
