@@ -5,7 +5,7 @@ import { Button, FormInput } from '@/components/base'
 import { Column, Table, TableSkeleton } from '@/components/base/Table'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { getProposePDA, getAssertPDA, getChallengeAssertPDA, SolProtocol, programID } from '@/utils/anchor'
-import { BN } from '@coral-xyz/anchor'
+import { proposalDeserialization, assertionDeserialization } from '../../hooks/proposal'
 
 type TopicInput = {
   topicName: string
@@ -121,34 +121,38 @@ export default function AssetScreen() {
       }
     ].filter((data) => data !== undefined) as InputData[]
   }, [])
-  const test = () => {
+
+  const test = async () => {
     if (!publicKey || !connected) return;
-    // connection.getAccountInfo(publicKey).then((data) => {
-    //   console.log(data)
-    // })
-    //getParsedProgramAccounts
-    connection.getProgramAccounts
-      (programID, {
-        // "encoding": "base64",
-        // "commitment": "confirmed",
-        "filters": [
+    try {
+      const data = await connection.getProgramAccounts(programID, {
+        encoding: 'base64',
+        filters: [
           {
-            "memcmp": {
-              "offset": 0,
-              "bytes": "UZCy4MAg7xB"
+            memcmp: {
+              offset: 0,
+              bytes: "UZCy4MAg7xB"
             }
           }
         ]
-      }
-      ).then((data) => {
-        console.log(data)
-        data.map((item) => {
-          // const bufferData = Buffer.from(item.account.data);
-          console.log(item.account.data);
-        })
-      })
-  }
+      });
+      console.log(data);
 
+      data.forEach((item) => {
+        const bufferData = Buffer.from(item.account.data); 
+        console.log('Buffer Data:', bufferData);
+
+        if (bufferData.length > 0) {
+          const proposal = proposalDeserialization(bufferData);
+          if (proposal) {
+            console.log('Deserialized Proposal:', proposal);
+          }
+        }
+      });
+    } catch (error) {
+      console.error('Error fetching program accounts:', error);
+    }
+  }
 
   return (
     <div className={'mx-auto mt-8 w-2/3 space-y-4'}>
